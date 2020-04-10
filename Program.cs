@@ -1,83 +1,37 @@
 ﻿using System;
 
-class QuickSort
+class BubbleSort
 {
-
-    /* This function takes last element as pivot, 
-    places the pivot element at its correct 
-    position in sorted array, and places all 
-    smaller (smaller than pivot) to left of 
-    pivot and all greater elements to right 
-    of pivot */
-    static int partition(int[] arr, int low,
-                                int high)
+    static void bubbleSort(int[] arr)
     {
-        int pivot = arr[high];
-
-        // index of smaller element 
-        int i = (low - 1);
-        for (int j = low; j < high; j++)
-        {
-            // If current element is smaller 
-            // than the pivot 
-            if (arr[j] < pivot)
-            {
-                i++;
-
-                // swap arr[i] and arr[j] 
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
-        }
-
-        // swap arr[i+1] and arr[high] (or pivot) 
-        int temp1 = arr[i + 1];
-        arr[i + 1] = arr[high];
-        arr[high] = temp1;
-
-        return i + 1;
+        int input = arr.Length;
+        for (int firstelement = 0; firstelement < input - 1; firstelement++)
+            for (int secondelement = 0; secondelement < input - firstelement - 1; secondelement++)
+                if (arr[secondelement] > arr[secondelement + 1])
+                {
+                    // swap temp and arr[i] 
+                    int temp = arr[secondelement];
+                    arr[secondelement] = arr[secondelement + 1];
+                    arr[secondelement + 1] = temp;
+                }
     }
 
-
-    /* The main function that implements QuickSort() 
-    arr[] --> Array to be sorted, 
-    low --> Starting index, 
-    high --> Ending index */
-    static void quickSort(int[] arr, int low, int high)
+    /* Prints the array */
+    static void printArray(int[] arr)
     {
-        if (low < high)
-        {
-
-            /* pi is partitioning index, arr[pi] is 
-            now at right place */
-            int pi = partition(arr, low, high);
-
-            // Recursively sort elements before 
-            // partition and after partition 
-            quickSort(arr, low, pi - 1);
-            quickSort(arr, pi + 1, high);
-        }
-    }
-
-    
-    static void printArray(int[] arr, int n)
-    {
-        for (int i = 0; i < n; ++i)
-            Console.Write(arr[i] + " ");
-
+        int input = arr.Length;
+        for (int firstelement = 0; firstelement < input; ++firstelement)
+            Console.Write(arr[firstelement] + " ");
         Console.WriteLine();
     }
 
-    //Main Method
+    // Driver method 
     public static void Main()
     {
-        int[] arr = { 10, 7, 8, 9, 1, 5 };
-        int n = arr.Length;
-        quickSort(arr, 0, n - 1);
-        Console.WriteLine("sorted array ");
-        printArray(arr, n);
+        int[] arr = { 64, 34, 25, 12, 22, 11, 90 };
+        bubbleSort(arr);
+        Console.WriteLine("Sorted array");
+        printArray(arr);
     }
+
 }
-
-
