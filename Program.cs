@@ -1,37 +1,65 @@
 ﻿using System;
-
-class BubbleSort
+public class Student
 {
-    static void bubbleSort(int[] arr)
+    public int rollno;
+    public Double physics, maths, biology, total;
+    public Double percentage;
+    public String name, division;
+
+    //getting input from user
+    public void GetInputValues()
     {
-        int input = arr.Length;
-        for (int firstelement = 0; firstelement < input - 1; firstelement++)
-            for (int secondelement = 0; secondelement < input - firstelement - 1; secondelement++)
-                if (arr[secondelement] > arr[secondelement + 1])
-                {
-                    // swap temp and arr[i] 
-                    int temp = arr[secondelement];
-                    arr[secondelement] = arr[secondelement + 1];
-                    arr[secondelement + 1] = temp;
-                }
+        Console.Write("Enter Student Roll number :");
+        rollno = Convert.ToInt32(Console.ReadLine());
+
+        Console.Write("Enter student name :");
+        name = Console.ReadLine();
+
+        Console.Write("Enter physics mark :");
+        physics = Convert.ToInt32(Console.ReadLine());
+
+        Console.Write("Enter maths mark :");
+        maths = Convert.ToInt32(Console.ReadLine());
+
+        Console.Write("Enter biology mark :");
+        biology = Convert.ToInt32(Console.ReadLine());
+
+        //calculating the total mark
+        total = physics + maths + biology;
+
+        //calculating the student percentage
+        percentage = total / 3.0;
+
+        //checking student grade
+        if (percentage >= 70)
+            division = "***First class***";
+        else
+            if (percentage < 70 && percentage >= 50)
+                division = "***Second class***";
+            else
+                if (percentage < 50 && percentage >= 35)
+                    division = "***pass***";
+                else
+                    division = "***Fail***";
     }
 
-    /* Prints the array */
-    static void printArray(int[] arr)
+}
+public class College : Student
+{
+    public void Display()
     {
-        int input = arr.Length;
-        for (int firstelement = 0; firstelement < input; ++firstelement)
-            Console.Write(arr[firstelement] + " ");
-        Console.WriteLine();
+        Console.WriteLine("\n******Student Details******");
+        Console.WriteLine("Student Roll Number : " + rollno);
+        Console.WriteLine("Student Name : " + name);
+        Console.WriteLine("Total mark scored by Student : {0}\nPercentage : {1}\n {2}", total, percentage, division);
     }
 
-    // Driver method 
-    public static void Main()
+    //main method
+    public static void Main(string[] args)
     {
-        int[] arr = { 64, 34, 25, 12, 22, 11, 90 };
-        bubbleSort(arr);
-        Console.WriteLine("Sorted array");
-        printArray(arr);
-    }
+        College details = new College();
+        details.GetInputValues();
+        details.Display();
 
+    }
 }
