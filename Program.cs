@@ -1,65 +1,47 @@
 ﻿using System;
-public class Student
+
+public class SumOfTwoDiagonal
 {
-    public int rollno;
-    public Double physics, maths, biology, total;
-    public Double percentage;
-    public String name, division;
 
-    //getting input from user
-    public void GetInputValues()
+    // Function to calculate difference 
+    public static int difference(int[,] arr,
+                                int input)
     {
-        Console.Write("Enter Student Roll number :");
-        rollno = Convert.ToInt32(Console.ReadLine());
 
-        Console.Write("Enter student name :");
-        name = Console.ReadLine();
+        // Initilize sum of two diagonal
+        int primary = 0, secondary = 0;
 
-        Console.Write("Enter physics mark :");
-        physics = Convert.ToInt32(Console.ReadLine());
+        for (int rows = 0; rows < input; rows++)
+        {
+            for (int column = 0; column < input; column++)
+            {
 
-        Console.Write("Enter maths mark :");
-        maths = Convert.ToInt32(Console.ReadLine());
+                // finding sum of primary diagonal 
+                if (rows == column)
+                    primary += arr[rows, column];
 
-        Console.Write("Enter biology mark :");
-        biology = Convert.ToInt32(Console.ReadLine());
+                // finding sum of secondary diagonal 
+                if (rows == input - column - 1)
+                    secondary += arr[rows, column];
+            }
+        }
 
-        //calculating the total mark
-        total = physics + maths + biology;
-
-        //calculating the student percentage
-        percentage = total / 3.0;
-
-        //checking student grade
-        if (percentage >= 70)
-            division = "***First class***";
-        else
-            if (percentage < 70 && percentage >= 50)
-                division = "***Second class***";
-            else
-                if (percentage < 50 && percentage >= 35)
-                    division = "***pass***";
-                else
-                    division = "***Fail***";
+        // Absolute difference of the 
+        // sums across the diagonals 
+        return Math.Abs(primary - secondary);
     }
 
-}
-public class College : Student
-{
-    public void Display()
+    // Driver Code 
+    public static void Main()
     {
-        Console.WriteLine("\n******Student Details******");
-        Console.WriteLine("Student Roll Number : " + rollno);
-        Console.WriteLine("Student Name : " + name);
-        Console.WriteLine("Total mark scored by Student : {0}\nPercentage : {1}\n {2}", total, percentage, division);
-    }
+        int input = 3;
 
-    //main method
-    public static void Main(string[] args)
-    {
-        College details = new College();
-        details.GetInputValues();
-        details.Display();
+        int[,] arr ={{11, 2, 4}, 
+					{4 , 5, 6}, 
+					{10, 8, -12}};
+
+        Console.WriteLine("The Sum of Two Diagonal is : " +difference(arr, input));
 
     }
 }
+
