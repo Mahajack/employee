@@ -1,47 +1,30 @@
 ﻿using System;
 
-public class SumOfTwoDiagonal
+class CamelCase
 {
-
-    // Function to calculate difference 
-    public static int difference(int[,] arr,
-                                int input)
+    // Function to find the count of words 
+    // in a CamelCase sequence 
+    static int countWords(String word)
     {
+        int count = 1;
 
-        // Initilize sum of two diagonal
-        int primary = 0, secondary = 0;
-
-        for (int rows = 0; rows < input; rows++)
+        for (int i = 1; i < word.Length - 1; i++)
         {
-            for (int column = 0; column < input; column++)
-            {
-
-                // finding sum of primary diagonal 
-                if (rows == column)
-                    primary += arr[rows, column];
-
-                // finding sum of secondary diagonal 
-                if (rows == input - column - 1)
-                    secondary += arr[rows, column];
-            }
+            if (word[i] >= 65 && word[i] <= 90)
+                count++;
         }
 
-        // Absolute difference of the 
-        // sums across the diagonals 
-        return Math.Abs(primary - secondary);
+        return count;
     }
 
-    // Driver Code 
-    public static void Main()
+    // Main method
+    public static void Main(String[] args)
     {
-        int input = 3;
+        String word = "geeksForGeeks";
 
-        int[,] arr ={{11, 2, 4}, 
-					{4 , 5, 6}, 
-					{10, 8, -12}};
-
-        Console.WriteLine("The Sum of Two Diagonal is : " +difference(arr, input));
+        Console.WriteLine("The Count of Word is " +countWords(word));
 
     }
 }
+
 
