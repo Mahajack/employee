@@ -1,30 +1,43 @@
 ﻿using System;
 
-class CamelCase
+class JumpingOnTheClouds
 {
-    // Function to find the count of words 
-    // in a CamelCase sequence 
-    static int countWords(String word)
+    // Returns minimum number of 
+    // jumps to reach arr[high] from arr[len] 
+    static int minJumps(int[] arr, int len, int high)
     {
-        int count = 1;
+        // Base case: when source 
+        // and destination are same 
+        if (high == len)
+            return 0;
 
-        for (int i = 1; i < word.Length - 1; i++)
+        // When nothing is reachable 
+        // from the given source 
+        if (arr[len] == 0) 
+            return int.MaxValue;
+
+        // Traverse through all the points 
+        // reachable from arr[len]. Recursively 
+        // get the minimum number of jumps 
+        // needed to reach arr[high] from these 
+        // reachable points. 
+        int min = int.MaxValue;
+        for (int num = len + 1; num <= high && num <= len + arr[len]; num++)
         {
-            if (word[i] >= 65 && word[i] <= 90)
-                count++;
+            int jumps = minJumps(arr, num, high);
+            if (jumps != int.MaxValue && jumps + 1 < min)
+                min = jumps + 1;
         }
-
-        return count;
+        return min;
     }
 
-    // Main method
-    public static void Main(String[] args)
+    // Driver code 
+    public static void Main()
     {
-        String word = "geeksForGeeks";
-
-        Console.WriteLine("The Count of Word is " +countWords(word));
-
+        int[] arr = { 1, 3, 6, 3, 2, 3, 6, 8, 9, 5 };
+        int input = arr.Length;
+        Console.WriteLine("Minimum number of jumps to reach end is "
+                    + minJumps(arr, 0, input - 1));
     }
 }
-
 
