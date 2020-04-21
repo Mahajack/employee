@@ -1,43 +1,64 @@
 ﻿using System;
-
-class JumpingOnTheClouds
+using System.Collections.Generic;
+public class MinimumDistance
 {
-    // Returns minimum number of 
-    // jumps to reach arr[high] from arr[len] 
-    static int minJumps(int[] arr, int len, int high)
+    // function to find Distance between 
+    // two closest minimum 
+    static int findClosestMin(int[] arr, int num)
     {
-        // Base case: when source 
-        // and destination are same 
-        if (high == len)
-            return 0;
+        int minimum = int.MaxValue;
 
-        // When nothing is reachable 
-        // from the given source 
-        if (arr[len] == 0) 
-            return int.MaxValue;
-
-        // Traverse through all the points 
-        // reachable from arr[len]. Recursively 
-        // get the minimum number of jumps 
-        // needed to reach arr[high] from these 
-        // reachable points. 
-        int min = int.MaxValue;
-        for (int num = len + 1; num <= high && num <= len + arr[len]; num++)
+        // find the minimum element in the array 
+        for (int i = 0; i < num; i++)
         {
-            int jumps = minJumps(arr, num, high);
-            if (jumps != int.MaxValue && jumps + 1 < min)
-                min = jumps + 1;
+            if (arr[i] < minimum)
+            {
+                minimum = arr[i];
+            }
         }
-        return min;
+
+        // vector to store indexes of occurrences 
+        // of minimum element in the array 
+        List<int> indexes = new List<int>();
+
+        // store indexes of occurrences 
+        // of minimum element in the array 
+        for (int i = 0; i < num; i++)
+        {
+            if (arr[i] == minimum)
+            {
+                indexes.Add(i);
+            }
+        }
+
+        // if minimum element doesnot occurs atleast 
+        // two times, return -1. 
+        if (indexes.Count < 2)
+        {
+            return -1;
+        }
+        int minimum_distance = int.MaxValue;
+
+        // calculate minimum difference between 
+        // any two consecutive indexes 
+        for (int i = 1; i < indexes.Count; i++)
+        {
+            if ((indexes[i] - indexes[i - 1]) < minimum_distance)
+            {
+                minimum_distance = (indexes[i] - indexes[i - 1]);
+            }
+        }
+
+        return minimum_distance;
     }
 
-    // Driver code 
+    // Main Method
     public static void Main()
     {
-        int[] arr = { 1, 3, 6, 3, 2, 3, 6, 8, 9, 5 };
-        int input = arr.Length;
-        Console.WriteLine("Minimum number of jumps to reach end is "
-                    + minJumps(arr, 0, input - 1));
+        int[] arr = { 5, 1, 2, 3, 4, 1, 2, 1 };
+        int size = arr.Length;
+        Console.WriteLine("Minimum Distance is " +findClosestMin(arr, size));
     }
 }
+
 
