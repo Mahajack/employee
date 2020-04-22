@@ -1,64 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
-public class MinimumDistance
+namespace Steps
 {
-    // function to find Distance between 
-    // two closest minimum 
-    static int findClosestMin(int[] arr, int num)
+    class StairCase
     {
-        int minimum = int.MaxValue;
-
-        // find the minimum element in the array 
-        for (int i = 0; i < num; i++)
+        // Modified Binary search function 
+        // to solve the equation 
+        public static int solve(int low, int high, int num)
         {
-            if (arr[i] < minimum)
+            while (low <= high)
             {
-                minimum = arr[i];
+                int mid = (low + high) / 2;
+
+                // if mid is solution to equation 
+                if ((mid * (mid + 1)) == num)
+                    return mid;
+
+                // if our solution to equation 
+                // lies between mid and mid-1 
+                if (mid > 0 && (mid * (mid + 1)) > num &&
+                            (mid * (mid - 1)) <= num)
+                    return mid - 1;
+
+                // if solution to equation is 
+                // greater than mid 
+                if ((mid * (mid + 1)) > num)
+                    high = mid - 1;
+
+                // if solution to equation is less 
+                // than mid 
+                else
+                    low = mid + 1;
             }
-        }
-
-        // vector to store indexes of occurrences 
-        // of minimum element in the array 
-        List<int> indexes = new List<int>();
-
-        // store indexes of occurrences 
-        // of minimum element in the array 
-        for (int i = 0; i < num; i++)
-        {
-            if (arr[i] == minimum)
-            {
-                indexes.Add(i);
-            }
-        }
-
-        // if minimum element doesnot occurs atleast 
-        // two times, return -1. 
-        if (indexes.Count < 2)
-        {
             return -1;
         }
-        int minimum_distance = int.MaxValue;
 
-        // calculate minimum difference between 
-        // any two consecutive indexes 
-        for (int i = 1; i < indexes.Count; i++)
+        // Driver function 
+        public static void Main()
         {
-            if ((indexes[i] - indexes[i - 1]) < minimum_distance)
-            {
-                minimum_distance = (indexes[i] - indexes[i - 1]);
-            }
+            Console.Write("Enter the Number of bricks : ");
+            int num = Convert.ToInt32(Console.ReadLine());
+            // call binary search method to 
+            // solve for limits 1 to num 
+            int steps = solve(1, num, 2 * num);
+
+            // Because our pattern starts 
+            //from 2, 3, 4, 5... 
+            // so, we subtract 1 from ans 
+            if (steps != -1)
+                steps--;
+            Console.WriteLine("Number of stair steps = " + steps);
         }
-
-        return minimum_distance;
-    }
-
-    // Main Method
-    public static void Main()
-    {
-        int[] arr = { 5, 1, 2, 3, 4, 1, 2, 1 };
-        int size = arr.Length;
-        Console.WriteLine("Minimum Distance is " +findClosestMin(arr, size));
     }
 }
-
 
