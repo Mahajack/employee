@@ -1,55 +1,49 @@
 ﻿using System;
-namespace Steps
+
+class Triplets
 {
-    class StairCase
+    // returns true if there is 
+    // triplet with sum equal 
+    // to 'sum' present in input[]. 
+    // Also, prints the triplet 
+    static bool find3Numbers(int[] input, int arr_size, int sum)
+                           
     {
-        // Modified Binary search function 
-        // to solve the equation 
-        public static int solve(int low, int high, int num)
+        // Fix the first 
+        // element as input[i] 
+        for (int firstelement = 0; firstelement < arr_size - 2; firstelement++)
         {
-            while (low <= high)
+
+            // Fix the second 
+            // element as input[j] 
+            for (int secondelement = firstelement + 1;secondelement < arr_size - 1; secondelement++)
             {
-                int mid = (low + high) / 2;
 
-                // if mid is solution to equation 
-                if ((mid * (mid + 1)) == num)
-                    return mid;
-
-                // if our solution to equation 
-                // lies between mid and mid-1 
-                if (mid > 0 && (mid * (mid + 1)) > num &&
-                            (mid * (mid - 1)) <= num)
-                    return mid - 1;
-
-                // if solution to equation is 
-                // greater than mid 
-                if ((mid * (mid + 1)) > num)
-                    high = mid - 1;
-
-                // if solution to equation is less 
-                // than mid 
-                else
-                    low = mid + 1;
+                // the third number 
+                for (int thirdelement = secondelement + 1;thirdelement < arr_size; thirdelement++)
+                {
+                    if (input[firstelement] + input[secondelement] + input[thirdelement] == sum)
+                    {
+                        Console.WriteLine("Triplet is " + input[firstelement] + ", " + input[secondelement] + ", " + input[thirdelement]);
+                        return true;
+                    }
+                }
             }
-            return -1;
         }
 
-        // Driver function 
-        public static void Main()
-        {
-            Console.Write("Enter the Number of bricks : ");
-            int num = Convert.ToInt32(Console.ReadLine());
-            // call binary search method to 
-            // solve for limits 1 to num 
-            int steps = solve(1, num, 2 * num);
+        return false;
+    }
 
-            // Because our pattern starts 
-            //from 2, 3, 4, 5... 
-            // so, we subtract 1 from ans 
-            if (steps != -1)
-                steps--;
-            Console.WriteLine("Number of stair steps = " + steps);
-        }
+    // Driver Code 
+    public static void Main()
+    {
+        int[] input = { 1, 4, 45, 6, 10, 8 };
+        int sum = 11;
+       
+        int arr_size = input.Length;
+
+        find3Numbers(input, arr_size, sum);
     }
 }
+
 
