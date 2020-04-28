@@ -1,63 +1,56 @@
 ﻿using System;
-class Pangrams
+
+class TimeInWords
 {
-    // Returns true if the string 
-    // is pangram else false 
-    public static bool checkPangram(string str)
+
+    static void printWords(int hour, int minute)
     {
+        string[] nums = { "zero", "one", "two", "three", "four", 
+							"five", "six", "seven", "eight", "nine" , 
+							"ten", "eleven", "twelve", "thirteen", 
+							"fourteen", "fifteen", "sixteen", "seventeen", 
+							"eighteen", "nineteen", "twenty", "twenty one", 
+							"twenty two", "twenty three", "twenty four", 
+							"twenty five", "twenty six", "twenty seven", 
+							"twenty eight", "twenty nine", 
+						};
 
-        // Create a hash table to mark the 
-        // characters present in the string 
-        // By default all the elements of 
-        // mark would be false. 
-        bool[] mark = new bool[26];
+        if (minute == 0)
+            Console.WriteLine(nums[hour] + " o' clock ");
 
-        // For indexing in mark[] 
-        int index = 0;
+        else if (minute == 1)
+            Console.WriteLine("one minute past " + nums[hour]);                       
 
-        //Transverse the all character 
-        for (int character = 0; character < str.Length; character++)
-        {
-            // If uppercase character, subtract 'A' 
-            // to find index. 
-            if ('A' <= str[character] && str[character] <= 'Z')
-                index = str[character] - 'A';
+        else if (minute == 59)
+            Console.WriteLine("one minute to " +
+                                nums[(hour % 12) + 1]);
 
-            // If lowercase character, 
-            // subtract 'a' to find 
-            // index. 
-            else if ('a' <= str[character] && str[character] <= 'z')
-                index = str[character] - 'a';
+        else if (minute == 15)
+            Console.WriteLine("quarter past " + nums[hour]);
 
-            // If this character is other than english 
-            // lowercase and uppercase characters. 
-            else
-                continue;
+        else if (minute == 30) 
+            Console.WriteLine("half past " + nums[hour]);
 
-            mark[index] = true;
-        }
+        else if (minute == 45)
+            Console.WriteLine("quarter to " +
+                                nums[(hour % 12) + 1]);
 
-        // Return false if any 
-        // character is unmarked 
-        for (int character = 0; character <= 25; character++)
-            if (mark[character] == false)
-                return (false);
+        else if (minute <= 30)
+            Console.WriteLine(nums[minute] + " minutes past " +
+                                                    nums[hour]);
 
-        // If all characters 
-        // were present 
-        return (true);
+        else if (minute > 30)
+            Console.WriteLine(nums[60 - minute] + " minutes to " +
+                                            nums[(hour % 12) + 1]);
     }
 
-    // Driver Code 
+    // Driven code 
     public static void Main()
     {
-        Console.Write("Enter the Sentence : ");
-        string str = Console.ReadLine();
-
-        if (checkPangram(str) == true)
-            Console.WriteLine(str + " is a pangram.");
-        else
-            Console.WriteLine(str + " is not a pangram.");
+        Console.Write("Enter the hour and minute : ");
+        int hour = Convert.ToInt32(Console.ReadLine());
+        int minute = Convert.ToInt32(Console.ReadLine());
+        printWords(hour, minute);
     }
 }
 
