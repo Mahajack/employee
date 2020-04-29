@@ -1,56 +1,57 @@
 ﻿using System;
 
-class TimeInWords
+public class Anagram
 {
 
-    static void printWords(int hour, int minute)
+    static int NO_OF_CHARS = 256;
+
+    /* function to check whether two strings 
+    are anagram of each other */
+    static bool areAnagram(char[] str1, char[] str2)
     {
-        string[] nums = { "zero", "one", "two", "three", "four", 
-							"five", "six", "seven", "eight", "nine" , 
-							"ten", "eleven", "twelve", "thirteen", 
-							"fourteen", "fifteen", "sixteen", "seventeen", 
-							"eighteen", "nineteen", "twenty", "twenty one", 
-							"twenty two", "twenty three", "twenty four", 
-							"twenty five", "twenty six", "twenty seven", 
-							"twenty eight", "twenty nine", 
-						};
+        // Create 2 count arrays and initialize 
+        // all values as 0 
+        int[] count1 = new int[NO_OF_CHARS];
+        int[] count2 = new int[NO_OF_CHARS];
+        int num;
 
-        if (minute == 0)
-            Console.WriteLine(nums[hour] + " o' clock ");
+        // For each character in input strings, 
+        // increment count in the corresponding 
+        // count array 
+        for (num = 0; num < str1.Length && num < str2.Length;
+            num++)
+        {
+            count1[str1[num]]++;
+            count2[str2[num]]++;
+        }
 
-        else if (minute == 1)
-            Console.WriteLine("one minute past " + nums[hour]);                       
+        // If both strings are of different length. 
+        // Removing this condition will make the program 
+        // fail for strings like "aaca" and "aca" 
+        if (str1.Length != str2.Length)
+            return false;
 
-        else if (minute == 59)
-            Console.WriteLine("one minute to " +
-                                nums[(hour % 12) + 1]);
+        // Compare count arrays 
+        for (num = 0; num < NO_OF_CHARS; num++)
+            if (count1[num] != count2[num])
+                return false;
 
-        else if (minute == 15)
-            Console.WriteLine("quarter past " + nums[hour]);
-
-        else if (minute == 30) 
-            Console.WriteLine("half past " + nums[hour]);
-
-        else if (minute == 45)
-            Console.WriteLine("quarter to " +
-                                nums[(hour % 12) + 1]);
-
-        else if (minute <= 30)
-            Console.WriteLine(nums[minute] + " minutes past " +
-                                                    nums[hour]);
-
-        else if (minute > 30)
-            Console.WriteLine(nums[60 - minute] + " minutes to " +
-                                            nums[(hour % 12) + 1]);
+        return true;
     }
 
-    // Driven code 
+    /* Driver program to test to print printDups*/
     public static void Main()
     {
-        Console.Write("Enter the hour and minute : ");
-        int hour = Convert.ToInt32(Console.ReadLine());
-        int minute = Convert.ToInt32(Console.ReadLine());
-        printWords(hour, minute);
+        char[] str1 = ("csharp").ToCharArray();
+        char[] str2 = ("sharpc").ToCharArray();
+
+        if (areAnagram(str1, str2))
+            Console.WriteLine("The two strings are"
+                            + "anagram of each other");
+        else
+            Console.WriteLine("The two strings are not"
+                            + " anagram of each other");
     }
 }
+
 
