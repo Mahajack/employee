@@ -1,28 +1,23 @@
-﻿using System;
+﻿ using System;
 
-public class GameOfStone
+class CountingDigit
 {
-    // Function that returns true if u win 
-    static bool checkWin(int noofstone)
+
+    static int countDigit(long number)
     {
-        if (noofstone % 2 != 0)
-            return true;
-        return false;
+        if (number == 0)
+            return 0;
+        return 1 + countDigit(number / 10);
     }
 
-    // Driver code 
-
-    static public void Main()
+    //Driver Code
+    public static void Main()
     {
-
-        Console.Write("Enter the No of Stone : ");
-        int noofstone = Convert.ToInt32(Console.ReadLine());
-
-        if (checkWin(noofstone))
-            Console.WriteLine("Yes!You won");
-        else
-            Console.WriteLine("NO!You lose");
-
+        Console.Write("Enter the Digit : ");
+        long number = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Number of "
+                        + "digits : " + countDigit(number));
     }
-
 }
+
+
